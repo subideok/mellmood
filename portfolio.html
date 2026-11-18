@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://hangeul.pstatic.net/hangeul_static/css/maru-buri.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap">
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:#FFFFFF;color:#111111;font-family:"Pretendard Variable",Pretendard,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-x:clip}
+*{box-sizing:border-box}
+a{color:#111111}
+a:hover{color:#111111}
+input,textarea,button{font-family:inherit}
+::selection{background:#111111;color:#FFFFFF}
+@keyframes mmChar{0%{opacity:0;transform:translateY(18px)}100%{opacity:1;transform:none}}
+@keyframes mmBlink{50%{opacity:0}}
+@keyframes mmLine{from{transform:scaleX(0);opacity:0}to{transform:scaleX(1);opacity:1}}
+@media (max-width:759px){
+main#top{padding:104px 20px 88px!important}
+main#top h1{padding-bottom:20px!important}
+[data-m=pfgrid]{grid-template-columns:1fr!important;gap:12px!important;margin-top:24px!important}
+[data-m=pfgrid]>button{aspect-ratio:4/3!important}
+[data-m=pmodal]{padding:0!important;align-items:stretch!important}
+[data-m=pmodal]>div{padding:20px 16px 28px!important;max-height:none!important;height:100%}
+[data-m=pmodal]>div>div:first-child{margin-bottom:16px!important}
+[data-m=pmodal] h3{font-size:22px!important}
+[data-m=pmodal] [role=img]{height:auto!important;aspect-ratio:4/3;background-color:#F3F3F3!important}
+[data-m=pmodal] sc-if>div,[data-m=pmodal] [role=img]+div{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:6px!important;margin-top:8px!important}
+footer>div{padding-left:20px!important;padding-right:20px!important}
+}
+</style>
+</helmet>
+
+<header data-nav="" style="position:fixed;top:0;left:0;right:0;z-index:50;color:#111111;transition:transform .5s cubic-bezier(.2,.7,.2,1),background .4s,color .4s">
+  <div style="padding:0 clamp(20px,3vw,44px);height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+    <a href="index.html#top" aria-label="멜무드 홈" style="display:flex;align-items:center;gap:11px;text-decoration:none;color:inherit">
+      <svg viewBox="3 0 51 90" width="12" height="21" aria-hidden="true" style="display:block;flex:none"><path d="M4 2 L8.5 1 L8 20 L9 24 L8.3 50 L8.8 70 L8.2 88 L4.2 89 L4.6 66 L3.8 40 L4.4 22 Z M26 5 L30.5 4 L31 30 L30.2 34 L30.8 60 L30.4 84 L26.4 85 L26.8 58 L25.8 36 L26.5 18 Z M48 1 L52.5 2 L52 26 L53 46 L52.2 52 L52.6 89 L48.6 88 L48.2 60 L47.6 44 L48.4 24 Z" fill="currentColor"></path></svg>
+      <span role="img" aria-label="MELLMOOD" style="display:block;width:110px;height:11px;background:currentColor;-webkit-mask:url(./assets/logo-wordmark-alpha.png) center/contain no-repeat;mask:url(./assets/logo-wordmark-alpha.png) center/contain no-repeat"></span>
+    </a>
+    <sc-if value="{{ isDesktop }}" hint-placeholder-val="{{ true }}">
+      <nav style="display:flex;align-items:center;gap:36px;font-size:14px">
+        <a href="portfolio.html" style="text-decoration:none;color:inherit">포트폴리오</a>
+        <a href="index.html#process" style="text-decoration:none;color:inherit">작업절차</a>
+        <a href="{{ kakaoHref }}" target="{{ kakaoTarget }}" rel="noopener" onClickCapture="{{ ctaClick }}" style="display:inline-flex;align-items:center;height:38px;padding:0 18px;border:1px solid currentColor;border-radius:999px;text-decoration:none;color:inherit">상담문의</a>
+      </nav>
+    </sc-if>
+    <sc-if value="{{ isCompact }}" hint-placeholder-val="{{ false }}">
+      <button onClick="{{ toggleMenu }}" aria-label="메뉴" style="width:44px;height:44px;border:0;background:transparent;color:inherit;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px"><span style="width:22px;height:1px;background:currentColor"></span><span style="width:22px;height:1px;background:currentColor"></span></button>
+    </sc-if>
+  </div>
+</header>
+
+<sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;inset:0;z-index:90;background:#FFFFFF;display:flex;flex-direction:column;padding:24px">
+    <div style="display:flex;justify-content:flex-end"><button onClick="{{ toggleMenu }}" aria-label="닫기" style="width:44px;height:44px;border:0;background:transparent;font-size:24px;cursor:pointer;color:#111111">×</button></div>
+    <nav style="margin-top:8vh;display:flex;flex-direction:column;gap:6px;font-size:30px;font-weight:300">
+      <a href="portfolio.html" onClick="{{ toggleMenu }}" style="text-decoration:none;padding:10px 0">포트폴리오</a>
+      <a href="index.html#process" onClick="{{ toggleMenu }}" style="text-decoration:none;padding:10px 0">작업절차</a>
+      <a href="{{ kakaoHref }}" target="{{ kakaoTarget }}" rel="noopener" onClickCapture="{{ ctaClick }}" onClick="{{ toggleMenu }}" style="text-decoration:none;padding:10px 0">상담문의</a>
+    </nav>
+  </div>
+</sc-if>
+
+<main id="top" data-screen-label="Portfolio" style="padding:152px 44px 140px;min-height:100vh">
+  <div style="max-width:1240px;margin:0 auto">
+    <h1 data-reveal="0" style="margin:0;padding-bottom:36px;border-bottom:1px solid #D7D7D7;font-size:20px;font-weight:600;letter-spacing:-0.02em;color:#111111">포트폴리오</h1>
+    <div data-m="pfgrid" style="margin-top:48px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 24px">
+      <sc-for list="{{ pfItems }}" as="p" hint-placeholder-count="6">
+        <button onClick="{{ p.open }}" aria-label="{{ p.name }} 사진 보기" style="position:relative;display:block;width:100%;aspect-ratio:16/10;padding:0;border:0;overflow:hidden;cursor:pointer;background:#DFDFDF url({{ p.img }}) center/cover no-repeat">
+          <span style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(0,0,0,.55);color:#FFFFFF;font-size:22px;font-weight:600;letter-spacing:-0.02em;text-align:center;opacity:0;transition:opacity .4s ease" style-hover="opacity:1">{{ p.name }}</span>
+        </button>
+      </sc-for>
+    </div>
+    <sc-if value="{{ pfMulti }}" hint-placeholder-val="{{ false }}">
+      <nav aria-label="페이지" style="margin-top:72px;display:flex;justify-content:center;align-items:center;gap:6px">
+        <sc-for list="{{ pfPages }}" as="g" hint-placeholder-count="1">
+          <button onClick="{{ g.go }}" aria-current="{{ g.cur }}" style="width:32px;height:32px;border-radius:50%;border:0;background:{{ g.bg }};color:{{ g.fg }};font-family:inherit;font-size:13px;cursor:pointer">{{ g.n }}</button>
+        </sc-for>
+      </nav>
+    </sc-if>
+  </div>
+</main>
+
+<footer style="background:#111111;color:#B5B5B5;border-top:1px solid #444444">
+  <div style="max-width:1320px;margin:0 auto;padding:44px clamp(20px,3vw,44px) 56px;display:flex;flex-wrap:wrap;gap:24px 48px;justify-content:space-between;align-items:center;font-size:13px;line-height:1.9">
+    <div style="display:flex;align-items:center;gap:11px;color:#EDEDED">
+      <svg viewBox="3 0 51 90" width="12" height="21" aria-hidden="true" style="display:block"><path d="M4 2 L8.5 1 L8 20 L9 24 L8.3 50 L8.8 70 L8.2 88 L4.2 89 L4.6 66 L3.8 40 L4.4 22 Z M26 5 L30.5 4 L31 30 L30.2 34 L30.8 60 L30.4 84 L26.4 85 L26.8 58 L25.8 36 L26.5 18 Z M48 1 L52.5 2 L52 26 L53 46 L52.2 52 L52.6 89 L48.6 88 L48.2 60 L47.6 44 L48.4 24 Z" fill="currentColor"></path></svg>
+      <span role="img" aria-label="MELLMOOD" style="display:block;width:110px;height:11px;background:currentColor;-webkit-mask:url(./assets/logo-wordmark-alpha.png) center/contain no-repeat;mask:url(./assets/logo-wordmark-alpha.png) center/contain no-repeat"></span>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:4px 20px"><span>멜무드 MELMOOD · 대표 박재환</span><span>사업자등록번호 입력 필요</span><span>주소 확정 후 기재</span></div>
+    <a href="#top" style="color:#EDEDED;text-decoration:none">맨 위로 ↑</a>
+  </div>
+</footer>
+
+<sc-if value="{{ projectOpen }}" hint-placeholder-val="{{ false }}">
+  <div data-m="pmodal" onClick="{{ closeProject }}" style="position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:40px">
+    <div onClick="{{ stop }}" style="width:min(1080px,100%);max-height:100%;overflow-y:auto;background:#FFFFFF;border-radius:0;padding:40px">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:28px">
+        <div><div style="font-size:13px;color:#111111;margin-bottom:10px">{{ proj.label }}</div><h3 style="margin:0;font-size:30px;font-weight:600;letter-spacing:-0.03em;color:#111111">{{ proj.name }}</h3></div>
+        <button onClick="{{ closeProject }}" aria-label="닫기" style="width:44px;height:44px;flex:none;border-radius:50%;border:1px solid #111111;background:transparent;font-size:18px;cursor:pointer;color:#111111">×</button>
+      </div>
+      <div role="img" aria-label="{{ proj.name }}" style="width:100%;height:min(66vh,640px);border-radius:0;background:#DFDFDF url({{ proj.img }}) center/contain no-repeat"></div>
+      <sc-if value="{{ proj.many }}" hint-placeholder-val="{{ false }}"><div style="margin-top:12px;display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:12px">
+        <sc-for list="{{ proj.shots }}" as="s" hint-placeholder-count="6">
+          <button onClick="{{ s.pick }}" aria-label="사진 {{ s.n }}" style="aspect-ratio:1;border-radius:0;border:0;padding:0;cursor:pointer;background:#DFDFDF;opacity:{{ s.op }};transition:opacity .25s;overflow:hidden"><span style="display:block;width:100%;height:100%;background:url({{ s.src }}) center/cover no-repeat"></span></button>
+        </sc-for>
+      </div></sc-if>
+    </div>
+  </div>
+</sc-if>
+
+<sc-if value="{{ showMobileBar }}" hint-placeholder-val="{{ false }}">
+  <div style="position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:60">
+    <a href="{{ kakaoHref }}" target="{{ kakaoTarget }}" rel="noopener" onClickCapture="{{ ctaClick }}" style="display:flex;align-items:center;justify-content:center;height:52px;border-radius:999px;background:#111111;color:#FFFFFF;font-size:15px;font-weight:600;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.25)">상담문의</a>
+  </div>
+</sc-if>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;heroFont&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;마루부리&quot;,&quot;고운바탕&quot;,&quot;프리텐다드&quot;],&quot;default&quot;:&quot;마루부리&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;히어로&quot;},&quot;heroScrim&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;min&quot;:0,&quot;max&quot;:0.5,&quot;step&quot;:0.02,&quot;default&quot;:0.26,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;히어로&quot;},&quot;showNotes&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;시안&quot;},&quot;kakaoUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;상담&quot;}}">
+const PROJECTS = [
+  { name: '경주 조르바', type: '상업', label: '카페 · 경주', imgs: ['assets/portfolio/zorba-gyeongju.jpg', ...[1,2,3,4,5].map(n => 'assets/portfolio/gj-' + n + '.jpg')] },
+  { name: 'LA MELROSE', type: '상업', label: '의류매장 · 부산 해운대', imgs: ['assets/portfolio/la-melrose.jpg', ...[1,2,3,4,5,6,7].map(n => 'assets/portfolio/melrose-' + n + '.jpg')] },
+  { name: '바 수담', type: '상업', label: '바', imgs: [2,3,4,5,1].map(n => 'assets/portfolio/sudam-' + n + '.jpg') },
+  { name: '봉산 조르바', type: '상업', label: '카페 · 봉산', imgs: ['assets/portfolio/zorba-bongsan.jpg', 'assets/portfolio/zb-3.jpg', 'assets/portfolio/zb-1.jpg', 'assets/portfolio/zb-2.jpg'] },
+  { name: '웰킨 두피센터', type: '상업', label: '두피센터 · 대구', imgs: ['assets/portfolio/wellkin.jpg', 'assets/portfolio/w3-fix.jpg', 'assets/portfolio/w2-fix.jpg', 'assets/portfolio/w4-fix.jpg', 'assets/portfolio/w5-fix.jpg', 'assets/portfolio/w7-fix.jpg'] },
+  { name: 'MOJO DISCONNECTION HAIR', type: '상업', label: '미용실', imgs: ['assets/portfolio/mojo-hair.jpg', ...[1,2,3,4,5,6,7,8].map(n => 'assets/portfolio/mojo-' + n + '.jpg')] },
+];
+const REVIEWS = [
+  '제가 원하는 걸 말로 설명하기 어려웠는데, 도면이랑 3D를 보면서 이야기하니까 방향 잡기가 편했어요.',
+  '매장 운영 경험이 있으셔서 그런지 실제로 일할 때 편한 동선까지 같이 생각해 주셨어요.',
+  '예산 때문에 고민이 많았는데, 필요한 부분과 줄여도 되는 부분을 같이 정해 주셔서 좋았어요.',
+];
+const TABS = ['내 예산으로도 괜찮은 인테리어가 가능할까?', '다른 업체보다 왜 비싼 거지?', '기획비를 먼저 내도 괜찮을까?', '추가 비용이 나오거나 공사 중 문제가 생기면?', '공사가 끝난 뒤 문제가 생기면 어떻게 하지?'];
+const FAQS = [
+  ['인테리어 비용은 어떻게 결정되나요?', '공간의 크기와 상태, 공사 범위, 자재와 세부 사양에 따라 달라집니다. 상담과 현장 확인을 통해 필요한 작업을 살펴보고 견적 항목을 설명해 드립니다.'],
+  ['공사 전에 완성될 모습을 볼 수 있나요?', '설계 과정에서 3D로 공간을 함께 살펴보고 취향과 사용 방식에 맞게 조율합니다. 실제 마감재나 현장 조건에 따라 최종 모습에는 차이가 있을 수 있습니다.'],
+  ['공사 중 추가 비용이 발생하면 어떻게 하나요?', '현장 조건이나 요청사항 변경으로 비용이 달라질 수 있습니다. 변경이 필요한 경우 비용과 일정에 미치는 영향을 안내하고 협의합니다.'],
+  ['공사 진행 상황은 어떻게 확인하나요?', '현장 진행 상황과 주요 변경사항을 공유하며 고객이 공사 과정을 이해할 수 있도록 안내합니다.'],
+  ['상담부터 공사 완료까지 얼마나 걸리나요?', '공간의 규모, 공사 범위, 설계 및 자재 결정 과정에 따라 달라집니다. 상담 과정에서 예상 일정을 안내해 드립니다.'],
+  ['주거공간과 상업공간 모두 진행하나요?', '멜무드는 주거공간과 상업공간의 디자인 및 시공을 진행합니다. 구체적인 공사 가능 범위는 프로젝트 내용을 확인한 후 안내합니다.'],
+];
+// 후기 데이터: 항목만 추가하면 섹션이 자동으로 늘어납니다. consent가 false면 노출되지 않습니다. 비어 있으면 섹션 전체가 숨겨집니다.
+// quote: 원문에서 그대로 발췌 / orig: 개인정보를 가린 원문 캡처 / ratio: 캡처 가로/세로 / photo: 실제로 관련된 프로젝트 사진만(없으면 '')
+const STORIES = [
+  { consent: true, name: '광명 후렉시블 대표님', project: '', quote: '작업물 결과가 기대보다 훨씬 이상입니다! 이미지랑 레퍼런스 사이트만 드렸는데 기존 홈페이지보다 맘에 들게 완성됐네요.', orig: 'assets/reviews/kakao-1.jpg', ratio: '362/251', photo: '' },
+  { consent: true, name: '아이엠슈가링 사장님', project: '', quote: '기획부터 같이 고민해주시고, 따로 설명 안 드려도 알아서 잘 만들어주셔서 정말 감사합니다', orig: 'assets/reviews/kakao-2.jpg', ratio: '404/443', photo: '' },
+  { consent: true, name: '예뻐지다 원장님', project: '', quote: '전체적인 디자인은 물론이고, 작은 디테일 하나하나까지 세심하게 신경 써주신 게 느껴져서 정말 감동이었어요.', orig: 'assets/reviews/kakao-3.jpg', ratio: '900/871', photo: '' },
+  { consent: true, name: '다올부동산 대표님', project: '', quote: '처음 기획부터 제작까지 꼼꼼하게 신경 써주셔서 감사했고, 저희가 원하는 방향도 잘 반영해 주셔서 너무 만족스럽습니다!', orig: 'assets/reviews/kakao-4.jpg', ratio: '900/1300', photo: '' },
+].filter(s => s.consent && s.quote);
+const STAGES = [[0, 3.2], [3.2, 6.4], [6.4, 10.05]];
+const PLABELS = ["상담 및 현장 확인","설계 계약 및 공간 기획","3D 디자인 및 수정","자재·견적 협의 및 시공 계약","시공 및 진행 상황 공유","최종 확인 및 공간 인도"];
+const PIMG = [0, 1, 2];
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+class Component extends DCLogic {
+  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, scrolled: false, proj: -1, faq: 0, sent: false, space: '상업공간', rv: 0, tab: 0, filter: '전체', menu: false, pr: -1, formOpen: false, orig: -1, zoom: false };
+
+  componentDidMount() {
+    this._lastY = window.scrollY;
+    this._tick = () => { this._raf = 0; this.frame(); };
+    this._onScroll = () => { if (!this._raf) this._raf = requestAnimationFrame(this._tick); };
+    this._onResize = () => { this.setState({ w: window.innerWidth }); this._onScroll(); };
+    window.addEventListener('scroll', this._onScroll, { passive: true });
+    window.addEventListener('resize', this._onResize);
+    this._onKey = (e) => { if (e.key === 'Escape' && this.state.orig >= 0) this.setState({ orig: -1 }); };
+    window.addEventListener('keydown', this._onKey);
+    setTimeout(() => {
+            this.setupReveal(); this.frame(); this.startTyper();
+    }, 60);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this._onScroll);
+    window.removeEventListener('resize', this._onResize);
+    window.removeEventListener('keydown', this._onKey);
+    cancelAnimationFrame(this._mraf);
+    clearInterval(this._rvTimer); clearInterval(this._typer);
+    (this._ios || []).forEach(o => o.disconnect());
+    if (this._v) this._v.removeEventListener('timeupdate', this._tu);
+  }
+  componentDidUpdate(_, prev) {
+    this._onScroll && this._onScroll();
+    if (prev.pr !== this.state.pr && this.state.pr >= 0) {
+      const p = document.querySelector('[data-prpanel]');
+      if (p) { p.style.opacity = '0'; p.style.transform = 'translateY(8px)'; p.style.transition = 'none'; requestAnimationFrame(() => { p.style.transition = 'opacity .6s ease .1s, transform .7s cubic-bezier(.2,.7,.2,1) .1s'; p.style.opacity = '1'; p.style.transform = 'none'; }); }
+    }
+    if (prev.tab !== this.state.tab) {
+      const el = document.querySelector('[data-fade]');
+      if (el) { el.style.opacity = '0'; el.style.transform = 'translateY(10px)'; el.style.transition = 'none'; requestAnimationFrame(() => { el.style.transition = 'opacity .6s ease, transform .7s cubic-bezier(.2,.7,.2,1)'; el.style.opacity = '1'; el.style.transform = 'none'; }); }
+    }
+  }
+
+  startTyper() {
+    const el = document.querySelector('[data-typer]'); if (!el) return;
+    const full = el.textContent; el.textContent = '';
+    const o = new IntersectionObserver((ents) => {
+      if (!ents[0].isIntersecting) return; o.disconnect();
+      let i = 0;
+      this._typer = setInterval(() => { i++; el.textContent = full.slice(0, i); if (i >= full.length) clearInterval(this._typer); }, 75);
+    }, { threshold: 0.4 });
+    o.observe(el.closest('[data-reveal]') || el);
+    (this._ios = this._ios || []).push(o);
+  }
+  setupReveal() {
+    this._ios = [];
+    const reduce = this._reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    if (reduce) return;
+    const mk = (cb, opt) => { const o = new IntersectionObserver(cb, opt); this._ios.push(o); return o; };
+    const io = mk((ents) => ents.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.style.opacity = '1'; e.target.style.transform = 'none'; io.unobserve(e.target);
+    }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    document.querySelectorAll('[data-reveal]').forEach(el => {
+      if (el.__rv) return; el.__rv = 1;
+      const d = +(el.getAttribute('data-reveal') || 0);
+      const v2 = !!el.closest('[data-motion]');
+      el.style.opacity = '0'; el.style.transform = v2 ? 'translateY(20px)' : 'translateY(24px)';
+      el.style.transition = v2 ? 'opacity .6s ease ' + d + 'ms, transform .7s cubic-bezier(.2,.7,.2,1) ' + d + 'ms' : 'opacity 1s ease ' + d + 'ms, transform 1.1s cubic-bezier(.2,.7,.2,1) ' + d + 'ms';
+      io.observe(el);
+    });
+    const dio = mk((ents) => ents.forEach(e => { if (e.isIntersecting) { const d = e.target.querySelector('[data-draw]'); if (d) d.style.transform = 'scaleX(1)'; dio.unobserve(e.target); } }), { threshold: 0.4 });
+    document.querySelectorAll('[data-draw]').forEach(el => {
+      if (el.__rv) return; el.__rv = 1;
+      el.style.transform = 'scaleX(0)';
+      el.style.transition = 'transform 1.4s cubic-bezier(.65,0,.2,1) ' + (+el.getAttribute('data-draw') || 0) + 'ms';
+      dio.observe(el.parentElement);
+    });
+    document.querySelectorAll('[data-clip]').forEach((el, i) => {
+      if (el.__rv) return; el.__rv = 1;
+      el.style.clipPath = 'inset(100% 0 0 0)';
+      el.style.transition = 'clip-path 1.3s cubic-bezier(.76,0,.24,1) ' + ((i % 3) * 140) + 'ms';
+      const host = el.parentElement;
+      const o = mk((ents) => ents.forEach(e => { if (e.isIntersecting) { el.style.clipPath = 'inset(0% 0 0 0)'; o.disconnect(); } }), { threshold: 0.08 });
+      o.observe(host);
+    });
+  }
+
+  q(sel, all) { this._qc = this._qc || {}; const k = (all ? '*' : '') + sel; let v = this._qc[k]; if (!v || (all ? !v.length || !v[0].isConnected : !v.isConnected)) { v = all ? [...document.querySelectorAll(sel)] : document.querySelector(sel); this._qc[k] = v; } return v; }
+  frame() {
+    const y = window.scrollY, vh = window.innerHeight;
+    const nav = this.q('[data-nav]');
+    if (nav) {
+      const solid = y > 10;
+      const down = y > this._lastY && y > vh;
+      const nt = down && this.state.proj < 0 && !this.state.menu ? 'translateY(-100%)' : 'none'; if (nav.style.transform !== nt) nav.style.transform = nt;
+      nav.style.background = '#FFFFFF';
+      nav.style.color = '#111111';
+      
+      nav.style.borderBottom = solid ? '1px solid #DDDDDD' : '1px solid transparent';
+    }
+    this._lastY = y;
+    if ((y > vh * 0.6) !== this.state.scrolled) this.setState({ scrolled: y > vh * 0.6 });
+
+    const media = this.q('[data-hero-media]');
+    if (media && y < vh * 1.2) {
+      media.style.transform = 'translate3d(0,' + (y * 0.18).toFixed(1) + 'px,0)';
+      const copy = this.q('[data-hero-copy]');
+      if (copy) { copy.style.opacity = String(clamp(1 - y / (vh * 0.6), 0, 1)); copy.style.transform = 'translate3d(0,' + (y * 0.1).toFixed(1) + 'px,0)'; }
+    }
+
+    if (!this._reduce) this.q('[data-par]', true).forEach(f => {
+      const r = f.getBoundingClientRect();
+      if (r.bottom < -200 || r.top > vh + 200) return;
+      const inner = f.querySelector('[data-par-in]');
+      const sp = +(inner.getAttribute('data-speed') || 0);
+      inner.style.transform = 'translate3d(0,' + ((r.top + r.height / 2 - vh / 2) * sp).toFixed(1) + 'px,0)';
+    });
+
+    const steps = this.q('[data-step]', true);
+    if (steps.length) {
+      const tl = this.q('[data-tl]'), fill = this.q('[data-tlfill]');
+      if (tl && fill) { const last = steps[steps.length - 1]; const len = Math.max(0, last.offsetTop + 12.5 - 12); const line = this.q('[data-tlline]'); const hp = len + 'px'; if (line && line.style.height !== hp) line.style.height = hp; if (fill.style.height !== hp) fill.style.height = hp; const r = tl.getBoundingClientRect(); fill.style.transform = 'scaleY(' + clamp((vh * 0.5 - r.top - 12) / (len || 1), 0, 1).toFixed(3) + ')'; }
+      let act = 0;
+      steps.forEach((s, i) => { if (s.getBoundingClientRect().top < vh * 0.5) act = i; });
+      if (act !== this._act) {
+        this._act = act;
+        steps.forEach((s, i) => { const t = s.querySelector('[data-stxt]'); if (t) t.style.opacity = i === act ? '1' : (i < act ? '.5' : '.32'); const d = s.querySelector('[data-dot]'); if (d) { const on = i <= act; d.style.background = on ? '#111111' : '#F2F2F2'; d.style.borderColor = on ? '#111111' : '#B0B0B0'; } });
+        this.q('[data-pimg]', true).forEach(im => { const on = +im.getAttribute('data-pimg') === act; im.style.opacity = on ? '1' : '0'; im.style.transform = on ? 'scale(1)' : 'scale(1.02)'; });
+        const c = this.q('[data-pcount]'); if (c) c.textContent = String(act + 1).padStart(2, '0');
+        const l = this.q('[data-plabel]'); if (l) l.textContent = PLABELS[act];
+      }
+    }
+  }
+
+  videoRef = (el) => {
+    if (!el || el === this._v) return;
+    this._v = el;
+    el.muted = true; el.defaultMuted = true; el.volume = 0; el.loop = true; el.playsInline = true;
+    el.setAttribute('muted', ''); el.setAttribute('playsinline', '');
+    this._tu = () => {
+      const t = el.currentTime;
+      document.querySelectorAll('[data-bar]').forEach(b => {
+        const [s, e] = STAGES[+b.getAttribute('data-bar')];
+        b.style.height = (clamp((t - s) / (e - s), 0, 1) * 100).toFixed(1) + '%';
+      });
+    };
+    el.addEventListener('timeupdate', this._tu);
+    el.addEventListener('volumechange', () => { if (!el.muted) el.muted = true; });
+    const p = el.play(); if (p && p.catch) p.catch(() => {});
+  };
+
+  listRef = (el) => {
+    if (!el || el === this._list) return;
+    this._list = el;
+    const pv = () => document.querySelector('[data-preview]');
+    el.addEventListener('pointermove', (e) => {
+      if (e.pointerType !== 'mouse' || window.innerWidth < 900) return;
+      const p = pv(); if (!p) return;
+      const row = e.target.closest('[data-tone]');
+      p.style.left = e.clientX + 'px'; p.style.top = e.clientY + 'px';
+      if (row) { p.style.background = row.getAttribute('data-tone'); p.style.opacity = '1'; p.style.transform = 'scale(1)'; }
+    });
+    el.addEventListener('pointerleave', () => { const p = pv(); if (p) { p.style.opacity = '0'; p.style.transform = 'scale(.9)'; } });
+  };
+
+  renderVals() {
+    const { w, scrolled, proj, faq, sent, space, rv, tab, filter, menu, pr: prI } = this.state;
+    const pr = { rows: prI >= 0 ? '1fr' : '0fr' };
+    [0, 1, 2].forEach(i => { const on = prI === i; pr['o' + i] = on; pr['e' + i] = on ? 'true' : 'false'; pr['l' + i] = on ? '#111111' : '#C7C7C7'; pr['c' + i] = on ? '접기' : '자세히 보기'; pr['r' + i] = on ? '45deg' : '0deg'; pr['t' + i] = () => this.setState(st => ({ pr: st.pr === i ? -1 : i })); });
+    const isMobile = w < 760;
+    const heroCopy = this.props.heroCopy ?? 'A';
+    const showNotes = this.props.showNotes ?? true;
+    const list = PROJECTS.map((p, i) => ({ ...p, i })).filter(p => filter === '전체' || p.type === filter);
+    const P = PROJECTS[proj] || PROJECTS[0];
+    const need = '확인 후 입력';
+    const fields = [['프로젝트명', P.name], ['공간 유형', P.label], ['위치', P.loc || need], ['면적', need], ['고객의 고민', need], ['설계 방향', need], ['디자인 콘셉트', need], ['주요 자재', need], ['대표의 설명', need]]
+      .map(([k, v]) => ({ k, v, c: v === need ? '#777777' : '#111111' }));
+    const pill = (on, dark) => dark
+      ? { bg: on ? '#FFFFFF' : 'transparent', fg: on ? '#111111' : '#EDEDED', border: on ? '#FFFFFF' : '#5F5F5F' }
+      : { bg: on ? '#111111' : 'transparent', fg: on ? '#FFFFFF' : '#111111', border: on ? '#111111' : '#C7C7C7' };
+    const tv = {}; TABS.forEach((_, i) => { tv['tab' + i] = tab === i; });
+    return {
+      isDesktop: w >= 900, isCompact: w < 900,
+      menuOpen: menu, toggleMenu: () => this.setState(s => ({ menu: !s.menu })),
+      heroTop: isMobile ? '30%' : '24%', heroChars: [...'오래도록 머물 공간, 아무에게나 맡길 수 없으니까'].map((ch, i) => ({ ch: ch === ' ' ? (i === 11 ? '' : '\u00A0') : ch, disp: i === 11 ? 'block' : 'inline-block', delay: (300 + i * 60) + 'ms' })), ...({ '마루부리': { heroFont: '"MaruBuri", serif', heroWeight: 300, heroTrack: '.22em' }, '고운바탕': { heroFont: '"Gowun Batang", serif', heroWeight: 400, heroTrack: '.2em' }, '프리텐다드': { heroFont: '"Pretendard Variable", Pretendard, sans-serif', heroWeight: 300, heroTrack: '.32em' } }[this.props.heroFont ?? '마루부리'] || {}), heroA: heroCopy === 'A', heroB: heroCopy === 'B', heroC: heroCopy === 'C',
+      scrim: this.props.heroScrim ?? 0.26,
+      videoRef: this.videoRef, listRef: this.listRef,
+      showNotes,
+      stickyPos: isMobile ? 'relative' : 'sticky',
+      stepH: isMobile ? 'auto' : '52vh',
+      rowCols: isMobile ? '36px minmax(0,1fr) 20px' : '64px minmax(0,1.4fr) minmax(0,1fr) 40px',
+      filters: ['전체', '상업', '주거', '건물'].map(f => ({ label: f === '전체' ? '전체' : f === '건물' ? '건물' : f + '공간', ...pill(filter === f), pick: () => this.setState({ filter: f }) })),
+      projects: list.slice(0, 4).map((p, k) => ({ ...p, no: String(p.i + 1).padStart(2, '0'), label: isMobile ? '' : p.label, open: () => this.setState({ proj: p.i }) })),
+      projectOpen: proj >= 0,
+      proj: { name: P.name, label: P.label, img: '"' + (P.imgs[this.state.shot || 0] || P.imgs[0]) + '"', many: P.imgs.length > 1, shots: P.imgs.map((src, n) => ({ n: n + 1, src: '"' + src + '"', op: (this.state.shot || 0) === n ? 1 : 0.45, pick: () => this.setState({ shot: n }) })) },
+      closeProject: () => this.setState({ proj: -1 }),
+      stop: (e) => e.stopPropagation(),
+      reviews: REVIEWS.map((text, i) => ({ text, op: i === rv ? 1 : 0, x: i === rv ? '0px' : (i < rv ? '-18px' : '18px'), dot: i === rv ? '#111111' : '#C1C1C1', h: ['68px', '58px', '68px'][i], pick: () => this.setState({ rv: i }) })),
+      tabs: TABS.map((q, i) => ({ q: '“' + q + '”', no: String(i + 1).padStart(2, '0'), fg: tab === i ? '#111111' : '#777777', weight: tab === i ? 500 : 400, pick: () => this.setState({ tab: i }) })),
+      ...tv, pr, pj: Object.fromEntries(PROJECTS.map((p, i) => ['o' + i, () => this.setState({ proj: i, shot: 0 })])),
+      faqs: FAQS.map(([q, a], i) => ({ q, a, qid: 'faq-q' + i, rid: 'faq-a' + i, exp: faq === i ? 'true' : 'false', rot: faq === i ? '45deg' : '0deg', rows: faq === i ? '1fr' : '0fr', toggle: () => this.setState({ faq: faq === i ? -1 : i }) })),
+      pfItems: PROJECTS.slice((this.state.pfPage || 0) * 10, ((this.state.pfPage || 0) + 1) * 10).map((pj, k) => { const i = (this.state.pfPage || 0) * 10 + k; return { name: pj.name, label: pj.label, img: '"' + pj.imgs[0] + '"', open: () => this.setState({ proj: i, shot: 0 }) }; }),
+      pfMulti: PROJECTS.length > 10,
+      pfPages: Array.from({ length: Math.ceil(PROJECTS.length / 10) }, (_, i) => { const on = i === (this.state.pfPage || 0); return { n: i + 1, cur: on ? 'page' : 'false', bg: on ? '#111111' : 'transparent', fg: on ? '#FFFFFF' : '#777777', go: () => { this.setState({ pfPage: i }); window.scrollTo({ top: 0, behavior: 'smooth' }); } }; }),
+      hasStories: STORIES.length > 0,
+      storyList: (this.state.allStories ? STORIES : STORIES.slice(0, 9)).map((s, i) => ({ no: String(i + 1).padStart(2, '0'), quote: s.quote, name: s.name, ratio: s.ratio || '3/4', orig: '"' + s.orig + '"', open: () => this.setState({ orig: i, zoom: false }) })),
+      storyMore: !this.state.allStories && STORIES.length > 9, showAllStories: () => this.setState({ allStories: true }),
+      marqA: (() => { const out = []; while (STORIES.length && out.length < 10) STORIES.forEach((s, i) => out.push({ name: s.name, ratio: s.ratio || '3/4', orig: '"' + s.orig + '"', open: () => this.setState({ orig: i, zoom: false }) })); return out.concat(out); })(),
+      marqB: (() => { const out = []; while (STORIES.length && out.length < 8) STORIES.slice().reverse().forEach((s) => { const i = STORIES.indexOf(s); out.push({ name: s.name, quote: s.quote, open: () => this.setState({ orig: i, zoom: false }) }); }); return out.concat(out); })(),
+      marqPause: () => { this._mp = true; }, marqPlay: () => { this._mp = false; },
+      stories: STORIES.map((s, i) => { const on = i === rv % STORIES.length, q = (u) => '"' + u + '"'; return { ...s, no: String(i + 1).padStart(2, '0'), project: s.project || '', op: on ? 1 : 0, y: on ? '0px' : '16px', vis: on ? 'visible' : 'hidden', hidden: on ? 'false' : 'true', clip: on ? 'inset(0 0 0 0)' : 'inset(0 0 0 100%)', hasOrig: !!s.orig, hasPhoto: !!s.photo, noPhoto: !s.photo && !!s.orig, photo: q(s.photo), orig: q(s.orig), openOrig: () => this.setState({ orig: i, zoom: false }) }; }),
+      storyNo: String((STORIES.length ? rv % STORIES.length : 0) + 1).padStart(2, '0'), storyTotal: String(STORIES.length).padStart(2, '0'), storyBar: (STORIES.length ? ((rv % STORIES.length) + 1) / STORIES.length * 100 : 0) + '%',
+      origOpen: this.state.orig >= 0, orig: (() => { const s = STORIES[this.state.orig] || STORIES[0] || {}; return { name: s.name, img: '"' + s.orig + '"', ratio: s.ratio || '3/4' }; })(),
+      closeOrig: () => this.setState({ orig: -1 }), toggleZoom: () => this.setState(st => ({ zoom: !st.zoom })), zoomLabel: this.state.zoom ? '원래 크기' : '크게 보기', zoomW: this.state.zoom ? '900px' : 'min(480px, 100%)',
+      prevStory: () => STORIES.length > 1 && this.setState(s => ({ rv: (s.rv + STORIES.length - 1) % STORIES.length })),
+      nextStory: () => STORIES.length > 1 && this.setState(s => ({ rv: (s.rv + 1) % STORIES.length })),
+      dragStart: (e) => { this._dx = e.clientX; },
+      dragEnd: (e) => { if (this._dx == null) return; const d = e.clientX - this._dx; this._dx = null; if (Math.abs(d) > 50 && STORIES.length > 1) this.setState(s => ({ rv: (s.rv + (d < 0 ? 1 : STORIES.length - 1)) % STORIES.length })); },
+      formOpen: this.state.formOpen,
+      kakaoHref: (this.props.kakaoUrl || '').trim() || 'index.html#contact', kakaoTarget: (this.props.kakaoUrl || '').trim() ? '_blank' : '_self',
+      ctaFinal: (e) => { if ((this.props.kakaoUrl || '').trim()) return; e.preventDefault(); this.setState({ formOpen: true }); setTimeout(() => { const f = document.querySelector('[data-form]'); if (f) window.scrollTo({ top: f.getBoundingClientRect().top + window.scrollY - 72, behavior: this._reduce ? 'auto' : 'smooth' }); }, 80); },
+      ctaClick: (e) => { if ((this.props.kakaoUrl || '').trim() || !document.getElementById('contact')) return; e.preventDefault(); if (this.state.menu) this.setState({ menu: false }); const c = document.getElementById('contact'); if (c) window.scrollTo({ top: c.getBoundingClientRect().top + window.scrollY, behavior: this._reduce ? 'auto' : 'smooth' }); },
+      openForm: () => { this.setState({ formOpen: true }); setTimeout(() => { const f = document.querySelector('[data-form]'); if (f) window.scrollTo({ top: f.getBoundingClientRect().top + window.scrollY - 72, behavior: this._reduce ? 'auto' : 'smooth' }); }, 80); },
+      spaceTypes: ['상업공간', '주거공간', '건물 리노베이션'].map(s => ({ label: s, ...pill(space === s, true), pick: () => this.setState({ space: s }) })),
+      notSent: !sent, sent,
+      submit: (e) => { e.preventDefault(); this.setState({ sent: true }); },
+      showMobileBar: false,
+    };
+  }
+}
+</script>
+</body>
+</html>
