@@ -33,7 +33,9 @@ main#top h1{padding-bottom:20px!important}
 [data-m=pmodal] h3{font-size:22px!important}
 [data-m=pmodal] [role=img]{height:auto!important;aspect-ratio:4/3;background-color:#F3F3F3!important}
 [data-m=pmodal] sc-if>div,[data-m=pmodal] [role=img]+div{grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:6px!important;margin-top:8px!important}
-footer>div{padding-left:20px!important;padding-right:20px!important}
+footer>div{padding:56px 20px 32px!important}
+[data-m=fgrid]{grid-template-columns:1fr!important;gap:32px!important}
+footer>div>div:last-child{margin-top:44px!important}
 }
 </style>
 </helmet>
@@ -89,13 +91,33 @@ footer>div{padding-left:20px!important;padding-right:20px!important}
 </main>
 
 <footer style="background:#111111;color:#B5B5B5;border-top:1px solid #444444">
-  <div style="max-width:1320px;margin:0 auto;padding:44px clamp(20px,3vw,44px) 56px;display:flex;flex-wrap:wrap;gap:24px 48px;justify-content:space-between;align-items:center;font-size:13px;line-height:1.9">
+  <div style="max-width:1320px;margin:0 auto;padding:72px clamp(20px,3vw,44px) 40px;font-size:14px;line-height:1.9">
+    <div data-m="fgrid" style="display:grid;grid-template-columns:{{ tFootCols }};gap:{{ tFootGap }};align-items:start">
     <div style="display:flex;align-items:center;gap:11px;color:#EDEDED">
       <svg viewBox="3 0 51 90" width="12" height="21" aria-hidden="true" style="display:block"><path d="M4 2 L8.5 1 L8 20 L9 24 L8.3 50 L8.8 70 L8.2 88 L4.2 89 L4.6 66 L3.8 40 L4.4 22 Z M26 5 L30.5 4 L31 30 L30.2 34 L30.8 60 L30.4 84 L26.4 85 L26.8 58 L25.8 36 L26.5 18 Z M48 1 L52.5 2 L52 26 L53 46 L52.2 52 L52.6 89 L48.6 88 L48.2 60 L47.6 44 L48.4 24 Z" fill="currentColor"></path></svg>
       <span role="img" aria-label="MELLMOOD" style="display:block;width:110px;height:11px;background:currentColor;-webkit-mask:url(./assets/logo-wordmark-alpha.png) center/contain no-repeat;mask:url(./assets/logo-wordmark-alpha.png) center/contain no-repeat"></span>
     </div>
-    <div style="display:flex;flex-wrap:wrap;gap:4px 20px"><span>멜무드 MELMOOD · 대표 박재환</span><span>사업자등록번호 입력 필요</span><span>주소 확정 후 기재</span></div>
-    <a href="#top" style="color:#EDEDED;text-decoration:none">맨 위로 ↑</a>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="margin-bottom:10px;font-size:12px;letter-spacing:.12em;color:#777777">OFFICE</span>
+        <span style="white-space:nowrap">부산광역시 남구 용호동 373-21 4층</span>
+        <span style="white-space:nowrap">대구광역시 남구 봉덕로6길 35-1</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="margin-bottom:10px;font-size:12px;letter-spacing:.12em;color:#777777">CONTACT</span>
+        <a href="tel:010-5709-7432" style="display:flex;gap:16px;color:#B5B5B5;text-decoration:none" style-hover="color:#FFFFFF"><span style="width:12px;color:#777777">T</span>010-5709-7432</a>
+        <a href="mailto:bigpicture__@naver.com" style="display:flex;gap:16px;color:#B5B5B5;text-decoration:none" style-hover="color:#FFFFFF"><span style="width:12px;color:#777777">M</span>bigpicture__@naver.com</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:2px">
+        <span style="margin-bottom:10px;font-size:12px;letter-spacing:.12em;color:#777777">CHANNEL</span>
+        <a href="https://blog.naver.com/mellmood" target="_blank" rel="noopener" style="color:#B5B5B5;text-decoration:none" style-hover="color:#FFFFFF">네이버 블로그 ↗</a>
+        <a href="https://www.instagram.com/mellmood_official" target="_blank" rel="noopener" style="color:#B5B5B5;text-decoration:none" style-hover="color:#FFFFFF">인스타그램 ↗</a>
+        <sc-if value="{{ hasKakao }}" hint-placeholder-val="{{ false }}"><a href="https://open.kakao.com/o/szj3LKXi" target="_blank" rel="noopener" style="color:#B5B5B5;text-decoration:none" style-hover="color:#FFFFFF">카카오톡 상담 ↗</a></sc-if>
+      </div>
+    </div>
+    <div style="margin-top:64px;padding-top:24px;border-top:1px solid #333333;display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;align-items:center;font-size:13px;color:#777777">
+      <div style="display:flex;flex-wrap:wrap;gap:4px 20px"><span>멜무드 MELMOOD</span><span>대표 박재환</span><span>사업자등록번호 334-05-01042</span></div>
+      <a href="#top" style="color:#EDEDED;text-decoration:none">맨 위로 ↑</a>
+    </div>
   </div>
 </footer>
 
@@ -323,6 +345,7 @@ class Component extends DCLogic {
     const pr = { rows: prI >= 0 ? '1fr' : '0fr' };
     [0, 1, 2].forEach(i => { const on = prI === i; pr['o' + i] = on; pr['e' + i] = on ? 'true' : 'false'; pr['l' + i] = on ? '#111111' : '#C7C7C7'; pr['c' + i] = on ? '접기' : '자세히 보기'; pr['r' + i] = on ? '45deg' : '0deg'; pr['t' + i] = () => this.setState(st => ({ pr: st.pr === i ? -1 : i })); });
     const isMobile = w < 760;
+    const isTablet = w >= 760 && w < 1100;
     const heroCopy = this.props.heroCopy ?? 'A';
     const showNotes = this.props.showNotes ?? true;
     const list = PROJECTS.map((p, i) => ({ ...p, i })).filter(p => filter === '전체' || p.type === filter);
@@ -380,6 +403,9 @@ class Component extends DCLogic {
       notSent: !sent, sent,
       submit: (e) => { e.preventDefault(); this.setState({ sent: true }); },
       showMobileBar: false,
+      tFootCols: isTablet ? 'minmax(0,1fr) minmax(0,1fr)' : 'minmax(0,1fr) auto auto auto',
+      tFootGap: isTablet ? '40px 48px' : '48px 80px',
+      hasKakao: true,
     };
   }
 }
