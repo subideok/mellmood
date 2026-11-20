@@ -603,7 +603,7 @@ const PLABELS = ["전화·오픈채팅 기본 상담","고객 미팅·현장 확
 const PIMG = [0, 1, 2];
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
-const KAKAO_URL = '';
+const KAKAO_URL = 'https://open.kakao.com/o/szj3LKXi';
 class Component extends DCLogic {
   state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, scrolled: false, proj: -1, faq: 0, sent: false, space: '상업공간', rv: 0, tab: 0, filter: '전체', menu: false, pr: -1, ba: 50, formOpen: false, orig: -1, zoom: false };
 
@@ -857,9 +857,9 @@ class Component extends DCLogic {
       baUp: () => { this._baDrag = false; },
       baInput: (e) => this.setState({ ba: +e.target.value }),
       formOpen: this.state.formOpen,
-      kakaoHref: (this.props.kakaoUrl || '').trim() || '#contact', kakaoTarget: (this.props.kakaoUrl || '').trim() ? '_blank' : '_self',
-      ctaFinal: (e) => { if ((this.props.kakaoUrl || '').trim()) return; e.preventDefault(); },
-      ctaClick: (e) => { if ((this.props.kakaoUrl || '').trim()) return; e.preventDefault(); if (this.state.menu) this.setState({ menu: false }); const c = document.getElementById('contact'); if (c) window.scrollTo({ top: c.getBoundingClientRect().top + window.scrollY, behavior: this._reduce ? 'auto' : 'smooth' }); },
+      kakaoHref: (this.props.kakaoUrl || 'https://open.kakao.com/o/szj3LKXi').trim() || '#contact', kakaoTarget: (this.props.kakaoUrl || 'https://open.kakao.com/o/szj3LKXi').trim() ? '_blank' : '_self',
+      ctaFinal: (e) => { if ((this.props.kakaoUrl || 'https://open.kakao.com/o/szj3LKXi').trim()) return; e.preventDefault(); },
+      ctaClick: (e) => { if ((this.props.kakaoUrl || 'https://open.kakao.com/o/szj3LKXi').trim()) return; e.preventDefault(); if (this.state.menu) this.setState({ menu: false }); const c = document.getElementById('contact'); if (c) window.scrollTo({ top: c.getBoundingClientRect().top + window.scrollY, behavior: this._reduce ? 'auto' : 'smooth' }); },
       openForm: () => { this.setState({ formOpen: true }); setTimeout(() => { const f = document.querySelector('[data-form]'); if (f) window.scrollTo({ top: f.getBoundingClientRect().top + window.scrollY - 72, behavior: this._reduce ? 'auto' : 'smooth' }); }, 80); },
       spaceTypes: ['상업공간', '주거공간', '건물 리노베이션'].map(s => ({ label: s, ...pill(space === s, true), pick: () => this.setState({ space: s }) })),
       notSent: !sent, sent,
