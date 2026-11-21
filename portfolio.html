@@ -111,7 +111,7 @@ footer>div>div:last-child{margin-top:44px!important}
         <span style="margin-bottom:10px;font-size:12px;letter-spacing:.12em;color:#777777">CHANNEL</span>
         <a href="https://blog.naver.com/mellmood" target="_blank" rel="noopener" style="color:#B5B5B5;text-decoration:none" style-hover="color:#FFFFFF">네이버 블로그 ↗</a>
         <a href="https://www.instagram.com/mellmood_official" target="_blank" rel="noopener" style="color:#B5B5B5;text-decoration:none" style-hover="color:#FFFFFF">인스타그램 ↗</a>
-        <sc-if value="{{ hasKakao }}" hint-placeholder-val="{{ false }}"><a href="https://open.kakao.com/o/szj3LKXi" target="_blank" rel="noopener" style="color:#B5B5B5;text-decoration:none" style-hover="color:#FFFFFF">카카오톡 상담 ↗</a></sc-if>
+        <sc-if value="{{ hasKakao }}" hint-placeholder-val="{{ false }}"><a href="https://open.kakao.com/o/sdg0k2Xi" target="_blank" rel="noopener" style="color:#B5B5B5;text-decoration:none" style-hover="color:#FFFFFF">카카오톡 상담 ↗</a></sc-if>
       </div>
     </div>
     <div style="margin-top:64px;padding-top:24px;border-top:1px solid #333333;display:flex;flex-wrap:wrap;gap:12px 24px;justify-content:space-between;align-items:center;font-size:13px;color:#777777">
@@ -395,9 +395,9 @@ class Component extends DCLogic {
       dragStart: (e) => { this._dx = e.clientX; },
       dragEnd: (e) => { if (this._dx == null) return; const d = e.clientX - this._dx; this._dx = null; if (Math.abs(d) > 50 && STORIES.length > 1) this.setState(s => ({ rv: (s.rv + (d < 0 ? 1 : STORIES.length - 1)) % STORIES.length })); },
       formOpen: this.state.formOpen,
-      kakaoHref: (this.props.kakaoUrl || 'https://open.kakao.com/o/szj3LKXi').trim() || 'index.html#contact', kakaoTarget: (this.props.kakaoUrl || 'https://open.kakao.com/o/szj3LKXi').trim() ? '_blank' : '_self',
-      ctaFinal: (e) => { if ((this.props.kakaoUrl || 'https://open.kakao.com/o/szj3LKXi').trim()) return; e.preventDefault(); this.setState({ formOpen: true }); setTimeout(() => { const f = document.querySelector('[data-form]'); if (f) window.scrollTo({ top: f.getBoundingClientRect().top + window.scrollY - 72, behavior: this._reduce ? 'auto' : 'smooth' }); }, 80); },
-      ctaClick: (e) => { if ((this.props.kakaoUrl || 'https://open.kakao.com/o/szj3LKXi').trim() || !document.getElementById('contact')) return; e.preventDefault(); if (this.state.menu) this.setState({ menu: false }); const c = document.getElementById('contact'); if (c) window.scrollTo({ top: c.getBoundingClientRect().top + window.scrollY, behavior: this._reduce ? 'auto' : 'smooth' }); },
+      kakaoHref: (this.props.kakaoUrl || 'https://open.kakao.com/o/sdg0k2Xi').trim() || 'index.html#contact', kakaoTarget: (this.props.kakaoUrl || 'https://open.kakao.com/o/sdg0k2Xi').trim() ? '_blank' : '_self',
+      ctaFinal: (e) => { if ((this.props.kakaoUrl || 'https://open.kakao.com/o/sdg0k2Xi').trim()) return; e.preventDefault(); this.setState({ formOpen: true }); setTimeout(() => { const f = document.querySelector('[data-form]'); if (f) window.scrollTo({ top: f.getBoundingClientRect().top + window.scrollY - 72, behavior: this._reduce ? 'auto' : 'smooth' }); }, 80); },
+      ctaClick: (e) => { if ((this.props.kakaoUrl || 'https://open.kakao.com/o/sdg0k2Xi').trim() || !document.getElementById('contact')) return; e.preventDefault(); if (this.state.menu) this.setState({ menu: false }); const c = document.getElementById('contact'); if (c) window.scrollTo({ top: c.getBoundingClientRect().top + window.scrollY, behavior: this._reduce ? 'auto' : 'smooth' }); },
       openForm: () => { this.setState({ formOpen: true }); setTimeout(() => { const f = document.querySelector('[data-form]'); if (f) window.scrollTo({ top: f.getBoundingClientRect().top + window.scrollY - 72, behavior: this._reduce ? 'auto' : 'smooth' }); }, 80); },
       spaceTypes: ['상업공간', '주거공간', '건물 리노베이션'].map(s => ({ label: s, ...pill(space === s, true), pick: () => this.setState({ space: s }) })),
       notSent: !sent, sent,
